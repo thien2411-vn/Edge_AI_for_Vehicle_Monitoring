@@ -1,0 +1,8 @@
+dataset/
+videos_test/
+experiments/
+__pycache__/
+*.pt
+*.onnx
+*.tflite
+.DS_Store
