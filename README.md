@@ -1,7 +1,7 @@
 # Edge AI Vehicle Access System
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
-[![AI](https://img.shields.io/badge/AI-YOLOv5%20|%20PaddleOCR-orange.svg)]()
+[![AI](https://img.shields.io/badge/AI-YOLOv5%20|%20MobileNetV3-orange.svg)]()
 [![Hardware](https://img.shields.io/badge/Edge-Raspberry%20Pi%204-red.svg)]()
 
 This project implements an **Edge AI-based smart vehicle access system** deployed on a Raspberry Pi 4. It integrates real-time object detection, License Plate Recognition (LPR), and IoT control for a complete automated parking gate solution.
@@ -12,7 +12,7 @@ This project implements an **Edge AI-based smart vehicle access system** deploye
 graph TD
     A[USB Webcam] -->|Video Stream| B(Raspberry Pi 4 - Edge Server)
     B -->|1. Vehicle Detection| C{YOLOv5n Model}
-    C -->|Cropped Plate| E{PaddleOCR Model}
+    C -->|Cropped Plate| E{MobileNetV3 CRNN}
     E -->|Plate Text| F[(SQLite Database)]
     F -->|Validation Result| G[FastAPI Backend]
     G -->|Open Gate Signal| H[ESP32 Control Node]
@@ -22,7 +22,7 @@ graph TD
 ## Key Features
 
 * **Real-time Vehicle Detection**: Optimized YOLOv5 nano model running smoothly on edge hardware.
-* **License Plate Recognition (LPR)**: Uses PaddleOCR/EasyOCR for high-accuracy text extraction from fast-moving vehicles.
+* **License Plate Recognition (LPR)**: Uses a custom MobileNetV3-based CRNN model for high-accuracy text extraction from fast-moving vehicles.
 * **Edge Deployment Optimization**: Models are converted to **ONNX / TFLite** to maximize inference speed on the Raspberry Pi CPU.
 * **Hardware Integration**: USB Webcam for stable video streaming, and an ESP32 for controlling the physical gate via servo motors and RFID verification.
 
@@ -30,7 +30,7 @@ graph TD
 
 | Category | Technologies / Devices |
 | :--- | :--- |
-| **AI / Computer Vision** | Python, OpenCV, YOLOv5, PaddleOCR |
+| **AI / Computer Vision** | Python, OpenCV, YOLOv5, MobileNetV3 CRNN |
 | **Backend & Database** | FastAPI, SQLite |
 | **Embedded / IoT** | C/C++ (Arduino IDE), ESP32, RFID-RC522 |
 | **Edge Hardware** | Raspberry Pi 4 Model B, USB Webcam |
