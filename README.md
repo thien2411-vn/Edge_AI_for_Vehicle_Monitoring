@@ -37,7 +37,7 @@ graph TD
 
 ## Repository Structure
 - `/ESP32_Control_Node`: C++ code for receiving server commands and controlling the servo gate.
-- `/pipeline_test`: Core Python AI pipeline (Detection -> OCR) optimized for Edge execution.
+- `/Edge_AI_Pipeline`: Core Python AI pipeline (Detection -> OCR) optimized for Edge execution.
 
 ## Setup Instructions
 
