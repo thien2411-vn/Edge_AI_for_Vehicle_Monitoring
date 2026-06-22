@@ -6,3 +6,6 @@ __pycache__/
 *.onnx
 *.tflite
 .DS_Store
+
+*.mp4
+*.db

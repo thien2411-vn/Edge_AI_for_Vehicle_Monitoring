@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dữ liệu bãi xe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-950 text-slate-200 h-screen w-full flex flex-col overflow-hidden">
+
+    <header class="h-14 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-6 shrink-0">
+        <div class="flex items-center gap-6">
+
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-400">
+                <a href="index.html" class="hover:text-white transition border-b-2 border-transparent py-4">Hệ thống</a>
+                <a href="data.html" class="text-white transition border-b-2 border-blue-500 py-4">Dữ liệu</a>
+            </nav>
+        </div>
+
+    </header>
+
+    <main class="flex-1 p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-slate-100">Lịch sử ra vào bãi xe</h1>
+            
+            <div class="flex gap-2">
+                <input type="text" id="searchInput" placeholder="Tìm theo biển số..." class="bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500">
+                <button class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                    Tìm kiếm
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden shadow-lg">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-950/50 text-slate-400 text-sm uppercase tracking-wider border-b border-slate-800">
+                        <th class="px-6 py-4 font-medium">Mã Thẻ (RFID)</th>
+                        <th class="px-6 py-4 font-medium">Biển số</th>
+                        <th class="px-6 py-4 font-medium">Giờ Vào</th>
+                        <th class="px-6 py-4 font-medium">Giờ Ra</th>
+                        <th class="px-6 py-4 font-medium text-right">Phí gửi</th>
+                    </tr>
+                </thead>
+                <tbody id="logTableBody" class="text-sm divide-y divide-slate-800/50">
+                    <tr>
+                        <td colspan="5" class="text-center py-8 text-slate-500">
+                            <div class="flex flex-col items-center justify-center gap-2">
+                                <svg class="w-6 h-6 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle></svg>
+                                Đang tải dữ liệu từ máy chủ...
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        // HÀM LẤY DỮ LIỆU TỪ SERVER
+        async function fetchLogs() {
+            try {
+                const response = await fetch('/api/logs');
+                const data = await response.json();
+                
+                const tbody = document.getElementById('logTableBody');
+                tbody.innerHTML = ''; 
+
+                data.forEach(log => {
+                    const row = `
+                        <tr class="hover:bg-slate-800/50 transition">
+                            <td class="px-6 py-4 font-mono text-slate-400">${log.ticket}</td>
+                            <td class="px-6 py-4 font-bold text-slate-200">${log.plate}</td>
+                            <td class="px-6 py-4 text-slate-400">${log.time_in}</td>
+                            <td class="px-6 py-4 text-slate-400">${log.time_out}</td>
+                            <td class="px-6 py-4 text-right text-yellow-400 font-bold text-base">${log.fee}</td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                });
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center py-6 text-slate-500">Chưa có lịch sử xe ra vào bãi.</td></tr>';
+                }
+
+            } catch (error) {
+                console.error("Lỗi tải dữ liệu:", error);
+                document.getElementById('logTableBody').innerHTML = `<tr><td colspan="5" class="text-center py-6 text-red-400">Không thể kết nối đến máy chủ!</td></tr>`;
+            }
+        }
+
+        // CHẠY HÀM LẤY DỮ LIỆU KHI MỞ TRANG
+        document.addEventListener('DOMContentLoaded', fetchLogs);
+
+        // TÌM KIẾM THEO BIỂN SỐ
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toUpperCase().trim();
+            const rows = document.querySelectorAll('#logTableBody tr');
+
+            rows.forEach(row => {
+                const plateCell = row.querySelector('td:nth-child(2)');
+                if (plateCell) {
+                    const plateText = plateCell.textContent;
+                    if (searchTerm === "") {
+                        row.style.display = '';
+                        row.classList.remove('bg-blue-900/40');
+                    } else if (plateText.includes(searchTerm)) {
+                        row.style.display = '';
+                        row.classList.add('bg-blue-900/40');
+                    } else {
+                        row.style.display = 'none';
+                        row.classList.remove('bg-blue-900/40');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

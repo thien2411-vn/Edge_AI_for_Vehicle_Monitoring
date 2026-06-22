@@ -1,0 +1,14 @@
+# Web Server & API
+fastapi
+uvicorn[standard]
+requests
+
+# Hardware & Serial (ESP32)
+pyserial
+
+# Computer Vision & AI
+opencv-python-headless
+numpy<2.0.0
+
+# --- Tùy chọn (Bỏ comment nếu cần thiết trên Raspberry Pi) ---
+tflite-runtime

@@ -1,0 +1,31 @@
+venv/
+env/
+.env
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+.vscode/
+
+static/images/*.jpg
+static/images/*.png
+static/crops/*.jpg
+static/crops/*.png
+
+.DS_Store
+Thumbs.db
+
+# Database and video files
+*.db
+*.db-wal
+*.db-shm
+*.mp4
+# AI instructions
+AGENTS.md
+
+plate_dict.txt
+
+parking.service
+
