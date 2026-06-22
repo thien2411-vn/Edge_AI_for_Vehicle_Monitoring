@@ -12,8 +12,7 @@ This project implements an **Edge AI-based smart vehicle access system** deploye
 graph TD
     A[USB Webcam] -->|Video Stream| B(Raspberry Pi 4 - Edge Server)
     B -->|1. Vehicle Detection| C{YOLOv5n Model}
-    C -->|Bounding Box| D[ByteTrack Tracking]
-    D -->|Cropped Plate| E{PaddleOCR Model}
+    C -->|Cropped Plate| E{PaddleOCR Model}
     E -->|Plate Text| F[(SQLite Database)]
     F -->|Validation Result| G[FastAPI Backend]
     G -->|Open Gate Signal| H[ESP32 Control Node]
@@ -31,14 +30,14 @@ graph TD
 
 | Category | Technologies / Devices |
 | :--- | :--- |
-| **AI / Computer Vision** | Python, OpenCV, YOLOv5, PaddleOCR, ByteTrack |
+| **AI / Computer Vision** | Python, OpenCV, YOLOv5, PaddleOCR |
 | **Backend & Database** | FastAPI, SQLite |
 | **Embedded / IoT** | C/C++ (Arduino IDE), ESP32, RFID-RC522 |
 | **Edge Hardware** | Raspberry Pi 4 Model B, USB Webcam |
 
 ## Repository Structure
 - `/ESP32_Control_Node`: C++ code for receiving server commands and controlling the servo gate.
-- `/pipeline_test`: Core Python AI pipeline (Detection -> Tracking -> OCR) optimized for Edge execution.
+- `/pipeline_test`: Core Python AI pipeline (Detection -> OCR) optimized for Edge execution.
 
 ## Setup Instructions
 
