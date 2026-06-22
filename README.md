@@ -38,8 +38,7 @@ graph TD
 
 ## Repository Structure
 - `/ESP32_Control_Node`: C++ code for receiving server commands and controlling the servo gate.
-- `/tracking+reg_plate`: Core Python AI pipeline (Detection -> Tracking -> OCR).
-- `/pipeline_test`: Scripts for evaluating model accuracy and FPS performance.
+- `/pipeline_test`: Core Python AI pipeline (Detection -> Tracking -> OCR) optimized for Edge execution.
 
 ## Setup Instructions
 
